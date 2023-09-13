@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/javascript/javascript.min.js"></script>
+    <style>
+        /* .code-editor{
+            height: 100px;
+        } */
+      </style>
+  </head>
+  <body>
+    <div id="htmlEditor" class="code-editor"></div>
+    <div id="cssEditor" class="code-editor"></div>
+    <div id="jsEditor" class="code-editor"></div>
+    
+    <div id="output"></div>
+
+    <script>
+      const htmlEditor = CodeMirror(document.getElementById("htmlEditor"), {
+        mode: "htmlmixed",
+        theme: "default",
+        lineNumbers: true,
+        value: "<h1>Hello, World!</h1>",
+      });
+
+      const cssEditor = CodeMirror(document.getElementById("cssEditor"), {
+        mode: "css",
+        theme: "default",
+        lineNumbers: true,
+        value: "h1 { color: red; }",
+      });
+
+      const jsEditor = CodeMirror(document.getElementById("jsEditor"), {
+        mode: "javascript",
+        theme: "default",
+        lineNumbers: true,
+        value: 'document.querySelector("h1").style.fontSize = "24px";',
+      });
+
+      function updateOutput() {
+        const output = document.getElementById("output");
+        const html = htmlEditor.getValue();
+        const css = cssEditor.getValue();
+        const js = jsEditor.getValue();
+
+        output.innerHTML = `<style>${css}</style>${html}<script>${js}<\/script>`;
+      }
+
+      htmlEditor.on("change", updateOutput);
+      cssEditor.on("change", updateOutput);
+      jsEditor.on("change", updateOutput);
+
+      updateOutput();
+    </script>
+
+    
+  </body>
+</html>
